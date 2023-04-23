@@ -26,5 +26,5 @@ if uploaded_file is not None:
     y_axis = st.selectbox("Select Y Axis", columns)
 
     # Create a scatter plot using Plotly
-    fig = px.scatter(df, x=x_axis, y=y_axis, color="sex")
+    fig = px.scatter(df, x=x_axis, y=y_axis, color="SEX")
     st.plotly_chart(fig, use_container_width=True)
