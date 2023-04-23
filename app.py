@@ -28,10 +28,3 @@ if uploaded_file is not None:
     # Create a scatter plot using Plotly
     fig = px.scatter(df, x=x_axis, y=y_axis, color="sex")
     st.plotly_chart(fig, use_container_width=True)
-
-if x_axis not in df.columns:
-    st.error("Invalid column name for x-axis")
-    st.stop()
-if y_axis not in df.columns:
-    st.error("Invalid column name for y-axis")
-    st.stop()
