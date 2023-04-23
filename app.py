@@ -1,20 +1,30 @@
 import streamlit as st
-import altair as alt
 import pandas as pd
+import plotly.express as px
 
-# Set up example data
-tips = pd.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv")
+st.set_page_config(layout="wide")
 
-# Create chart
-chart = alt.Chart(tips).mark_bar().encode(
-    x=alt.X('day', title='Day of the week'),
-    y=alt.Y('mean(total_bill)', title='Mean total bill'),
-    color=alt.Color('sex', title='Sex')
-).properties(
-    width=alt.Step(40)
-)
+# Create a sidebar with file upload functionality
+st.sidebar.title("Upload CSV")
+uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
 
-# Display chart
-st.altair_chart(chart, use_container_width=True)
+# Main page content
+st.title("Interactive Plotting with Plotly")
+st.write("Upload a CSV file and select columns to visualize.")
 
-st.balloons()
+# Load data if a file has been uploaded
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+
+    # Display the raw data table
+    st.subheader("Raw Data")
+    st.write(df)
+
+    # Allow the user to select columns to visualize
+    columns = list(df.columns)
+    x_axis = st.selectbox("Select X Axis", columns)
+    y_axis = st.selectbox("Select Y Axis", columns)
+
+    # Create a scatter plot using Plotly
+    fig = px.scatter(df, x=x_axis, y=y_axis, color="sex")
+    st.plotly_chart(fig, use_container_width=True)
